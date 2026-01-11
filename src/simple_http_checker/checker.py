@@ -5,7 +5,9 @@ from typing import Collection
 logger = logging.getLogger(__name__)
 
 
-def check_urls(urls: Collection[str], timeout: int = 5) -> dict[str, str]:
+def check_urls(
+    urls: Collection[str], timeout: int = 5
+) -> dict[str, str]:
     """
     Checks a list of URLs and returns their status.
 
@@ -16,9 +18,11 @@ def check_urls(urls: Collection[str], timeout: int = 5) -> dict[str, str]:
     Returns:
         A dictionary mapping each URL to its status string.
     """
-    logger.info(f"Starting check for {len(urls)} URLs with a timeout of {timeout}")
+    logger.info(
+        f"Starting check for {len(urls)} URLs with a timeout of {timeout}"
+    )
     results = {}
-    
+
     for url in urls:
         status = "UNKNOWN"
         try:
@@ -28,7 +32,9 @@ def check_urls(urls: Collection[str], timeout: int = 5) -> dict[str, str]:
             if response.ok:
                 status = f"{response.status_code} OK"
             else:
-                status = f"{response.status_code} {response.reason}"
+                status = (
+                    f"{response.status_code} {response.reason}"
+                )
         except requests.exceptions.Timeout:
             status = "TIMEOUT"
             logger.warning(f"Request to {url} timed out.")
@@ -41,9 +47,9 @@ def check_urls(urls: Collection[str], timeout: int = 5) -> dict[str, str]:
                 f"An unexpected request error occurred for {url}: {e}",
                 exc_info=True,
             )
-        
+
         results[url] = status
         logger.debug(f"Checked: {url:<40} -> {status}")
-    
+
     logger.info(f"Completed check for {len(urls)} URLs")
     return results
