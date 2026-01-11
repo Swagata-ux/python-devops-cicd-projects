@@ -18,7 +18,7 @@ def test_single_url_success(mocker: MockerFixture):
     mock_check_urls.return_value = {
         "https://example.com": "200 OK"
     }
-    
+
     runner = CliRunner()
     result = runner.invoke(main, ["https://example.com"])
     assert result.exit_code == 0
@@ -36,7 +36,7 @@ def test_multiple_urls(mocker: MockerFixture):
         "https://example.com": "200 OK",
         "https://notfound.com": "404 Not Found",
     }
-    
+
     runner = CliRunner()
     result = runner.invoke(
         main, ["https://example.com", "https://notfound.com"]
@@ -53,7 +53,7 @@ def test_custom_timeout(mocker: MockerFixture):
     mock_check_urls.return_value = {
         "https://example.com": "200 OK"
     }
-    
+
     runner = CliRunner()
     result = runner.invoke(
         main, ["--timeout", "10", "https://example.com"]
@@ -71,11 +71,9 @@ def test_verbose_flag(mocker: MockerFixture):
     mock_check_urls.return_value = {
         "https://example.com": "200 OK"
     }
-    
+
     runner = CliRunner()
-    result = runner.invoke(
-        main, ["-v", "https://example.com"]
-    )
+    result = runner.invoke(main, ["-v", "https://example.com"])
     assert result.exit_code == 0
     # Verbose logging goes to stderr/logs, not stdout
     assert "200 OK" in result.output
