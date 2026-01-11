@@ -5,8 +5,6 @@ from typing import Collection
 logger = logging.getLogger(__name__)
 
 
-
-
 def check_urls(
     urls: Collection[str], timeout: int = 5
 ) -> dict[str, str]:
