@@ -15,12 +15,13 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+    "pytest",
+    "pytest-mock",
     "ruff",
     "black",
     "mypy",
     "bandit",
     "types-requests"
-
 ]
 
 [project.scripts]
@@ -40,4 +41,8 @@ warn_unused_configs = true
 ignore_missing_imports = true
 
 [tool.bandit]
-exclude_dirs = [".venv", "__pycache__", "build", "dist"]
+exclude_dirs = [".venv", "__pycache__", "build", "dist", "tests"]
+
+
+[tool.pytest.ini_options]
+addopts = "-rA -s -v"
