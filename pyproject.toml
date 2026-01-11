@@ -8,6 +8,20 @@ version = "0.1.0"
 description = "A simple CLI tool to check the status of URLs"
 readme = "README.md"
 requires-python = ">=3.9"
+authors = [
+    {name = "Swagata Banerjee", email = "pujabanerjee112@gmail.com"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
 dependencies = [
     "requests>=2.28,<3.0",
     "click>=8.0,<9.0"
@@ -46,3 +60,37 @@ exclude_dirs = [".venv", "__pycache__", "build", "dist", "tests"]
 
 [tool.pytest.ini_options]
 addopts = "-rA -s -v"
+
+
+[tool.semantic_release]
+version_toml = ["pyproject.toml:project.version"]
+build_command = "pip install build && python -m build"
+dist_path = "dist/"
+upload_to_pypi = true
+upload_to_release = true
+hvcs = "github"
+commit_message = "chore(release): {version} [skip cli]"
+
+[tool.semantic_release.branches.main]
+match = "main"
+prerelease = false
+
+[tool.semantic_release.changelog.default_templates]
+changelog_file = "CHANGELOG.md"
+
+
+[tool.semantic_release.commit_parser_options]
+allowed_tags = [
+  "build",
+  "chore",
+  "ci",
+  "docs",
+  "feat",
+  "fix",
+  "perf",
+  "style",
+  "refactor",
+  "test"
+]
+minor_tags = ["feat"]
+patch_tags = ["fix", "perf"]
