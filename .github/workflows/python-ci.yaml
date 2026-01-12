@@ -3,8 +3,6 @@ name: CI/CD for simple-http-checker
 on:
   push:
     branches: ["main"]
-  pull_request:
-    branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -60,7 +58,6 @@ jobs:
     needs:
       - tests
       - lint-static-checks
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     permissions:
       contents: write
       id-token: write
@@ -69,7 +66,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT }}
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -80,7 +77,7 @@ jobs:
           pip install python-semantic-release
       - name: Create release
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           semantic-release version
           semantic-release publish
